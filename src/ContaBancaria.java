@@ -2,8 +2,11 @@ public class ContaBancaria {
     private String nomeTitular;
     private double saldo;
     private double limite;
+    private int id;
+    private static int ultimoId = 100;
 
     public ContaBancaria(String nomeTitular, double limite) {
+        this.id = ++ultimoId;
         this.nomeTitular = nomeTitular;
         this.limite = limite;
         this.saldo = 0;
@@ -38,5 +41,9 @@ public class ContaBancaria {
 
         saldo += valor;
         return true;
+    }
+
+    public int getId() {
+        return id;
     }
 }
