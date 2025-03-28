@@ -18,6 +18,7 @@ public class CaixaEletronico {
             switch (opcao) {
                 case 1:
                     criarConta();
+
                     break;
                 case 2:
                     consultarSaldo();
@@ -50,7 +51,25 @@ public class CaixaEletronico {
         System.out.println("Digite o nome do titular da conta: ");
         String nome = scanner.nextLine();
 
-        contaBancaria = new ContaBancaria(nome);
+        System.out.println("Digite o limite inicial da conta: ");
+        double limite = Double.parseDouble(scanner.nextLine());
+
+        System.out.println("Você deseja iniciar a conta com saldo? (Y/N)");
+        String resposta = scanner.nextLine();
+
+        while (!resposta.equalsIgnoreCase("Y") && !resposta.equalsIgnoreCase("N")) {
+            System.out.println("Resposta inválida! Digite Y para sim ou N para não.");
+            resposta = scanner.nextLine();
+        }
+
+        if (resposta.equalsIgnoreCase("Y")) {
+            System.out.println("Digite o saldo inicial da conta: ");
+            double saldo = Double.parseDouble(scanner.nextLine());
+            contaBancaria = new ContaBancaria(nome, limite, saldo);
+        } else {
+            contaBancaria = new ContaBancaria(nome, limite);
+        }
+
         System.out.println("Conta criada com sucesso!");
     }
 

@@ -3,10 +3,15 @@ public class ContaBancaria {
     private double saldo;
     private double limite;
 
-    public ContaBancaria(String nomeTitular) {
+    public ContaBancaria(String nomeTitular, double limite) {
         this.nomeTitular = nomeTitular;
+        this.limite = limite;
         this.saldo = 0;
-        this.limite = 500;
+    }
+
+    public ContaBancaria(String nomeTitular, double limite, double saldo) {
+        this(nomeTitular, limite);
+        this.saldo = saldo;
     }
 
     public String getNomeTitular() {
