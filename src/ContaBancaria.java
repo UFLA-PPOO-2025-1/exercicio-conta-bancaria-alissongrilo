@@ -3,6 +3,8 @@ public class ContaBancaria {
     private double saldo;
     private double limite;
     private int id;
+
+    private static double taxaRendimento = 0.1;
     private static int ultimoId = 100;
 
     public ContaBancaria(String nomeTitular, double limite) {
@@ -45,5 +47,9 @@ public class ContaBancaria {
 
     public int getId() {
         return id;
+    }
+
+    public void render() {
+        saldo += saldo * taxaRendimento;
     }
 }

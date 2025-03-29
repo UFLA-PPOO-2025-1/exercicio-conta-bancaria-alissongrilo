@@ -13,7 +13,7 @@ public class CaixaEletronico {
     public void run() {
         int opcao = 0;
 
-        while (opcao != 6) {
+        while (opcao != 7) {
             menu();
             opcao = Integer.parseInt(scanner.nextLine());
 
@@ -35,6 +35,9 @@ public class CaixaEletronico {
                     exibirContas();
                     break;
                 case 6:
+                    render();
+                    break;
+                case 7:
                     System.out.println("Saindo...");
                     scanner.close();
                     break;
@@ -44,16 +47,17 @@ public class CaixaEletronico {
         }
     }
 
-    public void menu() {
+    private void menu() {
         System.out.println("1 - Criar conta");
         System.out.println("2 - Consultar Saldo");
         System.out.println("3 - Depositar");
         System.out.println("4 - Sacar");
         System.out.println("5 - Exibir contas");
-        System.out.println("6 - Sair");
+        System.out.println("6 - Render");
+        System.out.println("7 - Sair");
     }
 
-    public void criarConta() {
+    private void criarConta() {
         System.out.println("Digite o nome do titular da conta: ");
         String nome = scanner.nextLine();
 
@@ -84,7 +88,7 @@ public class CaixaEletronico {
         System.out.println("Conta ID: " + contaBancaria.getId() + " criada com sucesso!");
     }
 
-    public void consultarSaldo() {
+    private void consultarSaldo() {
         if (contas.isEmpty()) {
             System.out.println("Contas não encontrada!");
             return;
@@ -94,7 +98,7 @@ public class CaixaEletronico {
         int id = Integer.parseInt(scanner.nextLine());
 
         ContaBancaria contaBancaria = getContaById(id);
-        
+
         if (contaBancaria == null) {
             System.out.println("Conta não encontrada!");
             return;
@@ -103,7 +107,7 @@ public class CaixaEletronico {
         System.out.println("Saldo: " + contaBancaria.getSaldo());
     }
 
-    public void depositar() {
+    private void depositar() {
         if (contas.isEmpty()) {
             System.out.println("Contas não encontrada!");
             return;
@@ -129,7 +133,7 @@ public class CaixaEletronico {
         }
     }
 
-    public void sacar() {
+    private void sacar() {
         if (contas.isEmpty()) {
             System.out.println("Contas não encontrada!");
             return;
@@ -155,7 +159,7 @@ public class CaixaEletronico {
         }
     }
 
-    public void exibirContas() {
+    private void exibirContas() {
         for (ContaBancaria conta : contas) {
             System.out.println(conta.getId() + " - " + conta.getNomeTitular());
         }
@@ -169,5 +173,18 @@ public class CaixaEletronico {
         }
 
         return null;
+    }
+
+    private void render() {
+        if (contas.isEmpty()) {
+            System.out.println("Contas não encontrada!");
+            return;
+        }
+
+        for (ContaBancaria conta : contas) {
+            conta.render();
+        }
+
+        System.out.println("Rendimento aplicado com sucesso!");
     }
 }
