@@ -1,17 +1,19 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class CaixaEletronico {
-    private ContaBancaria contaBancaria;
+    private ArrayList<ContaBancaria> contas;
     private Scanner scanner;
 
     public CaixaEletronico() {
         scanner = new Scanner(System.in);
+        contas = new ArrayList<>();
     }
 
     public void run() {
         int opcao = 0;
 
-        while (opcao != 5) {
+        while (opcao != 6) {
             menu();
             opcao = Integer.parseInt(scanner.nextLine());
 
@@ -30,6 +32,9 @@ public class CaixaEletronico {
                     sacar();
                     break;
                 case 5:
+                    exibirContas();
+                    break;
+                case 6:
                     System.out.println("Saindo...");
                     scanner.close();
                     break;
@@ -44,7 +49,8 @@ public class CaixaEletronico {
         System.out.println("2 - Consultar Saldo");
         System.out.println("3 - Depositar");
         System.out.println("4 - Sacar");
-        System.out.println("5 - Sair");
+        System.out.println("5 - Exibir contas");
+        System.out.println("6 - Sair");
     }
 
     public void criarConta() {
@@ -62,18 +68,33 @@ public class CaixaEletronico {
             resposta = scanner.nextLine();
         }
 
+        ContaBancaria contaBancaria;
+
         if (resposta.equalsIgnoreCase("Y")) {
             System.out.println("Digite o saldo inicial da conta: ");
             double saldo = Double.parseDouble(scanner.nextLine());
+
             contaBancaria = new ContaBancaria(nome, limite, saldo);
+            contas.add(contaBancaria);
         } else {
             contaBancaria = new ContaBancaria(nome, limite);
+            contas.add(contaBancaria);
         }
 
-        System.out.println("Conta criada com sucesso!");
+        System.out.println("Conta ID: " + contaBancaria.getId() + " criada com sucesso!");
     }
 
     public void consultarSaldo() {
+        if (contas.isEmpty()) {
+            System.out.println("Contas não encontrada!");
+            return;
+        }
+
+        System.out.println("Digite o ID da conta: ");
+        int id = Integer.parseInt(scanner.nextLine());
+
+        ContaBancaria contaBancaria = getContaById(id);
+        
         if (contaBancaria == null) {
             System.out.println("Conta não encontrada!");
             return;
@@ -83,6 +104,16 @@ public class CaixaEletronico {
     }
 
     public void depositar() {
+        if (contas.isEmpty()) {
+            System.out.println("Contas não encontrada!");
+            return;
+        }
+
+        System.out.println("Digite o ID da conta: ");
+        int id = Integer.parseInt(scanner.nextLine());
+
+        ContaBancaria contaBancaria = getContaById(id);
+
         if (contaBancaria == null) {
             System.out.println("Conta não encontrada!");
             return;
@@ -99,6 +130,16 @@ public class CaixaEletronico {
     }
 
     public void sacar() {
+        if (contas.isEmpty()) {
+            System.out.println("Contas não encontrada!");
+            return;
+        }
+
+        System.out.println("Digite o ID da conta: ");
+        int id = Integer.parseInt(scanner.nextLine());
+
+        ContaBancaria contaBancaria = getContaById(id);
+
         if (contaBancaria == null) {
             System.out.println("Conta não encontrada!");
             return;
@@ -112,5 +153,21 @@ public class CaixaEletronico {
         } else {
             System.out.println("Saldo insuficiente!");
         }
+    }
+
+    public void exibirContas() {
+        for (ContaBancaria conta : contas) {
+            System.out.println(conta.getId() + " - " + conta.getNomeTitular());
+        }
+    }
+
+    private ContaBancaria getContaById(int id) {
+        for (ContaBancaria conta : contas) {
+            if (conta.getId() == id) {
+                return conta;
+            }
+        }
+
+        return null;
     }
 }
