@@ -13,7 +13,7 @@ public class CaixaEletronico {
     public void run() {
         int opcao = 0;
 
-        while (opcao != 7) {
+        while (opcao != 8) {
             menu();
             opcao = Integer.parseInt(scanner.nextLine());
 
@@ -38,6 +38,9 @@ public class CaixaEletronico {
                     render();
                     break;
                 case 7:
+                    modificarTaxaRendimento();
+                    break;
+                case 8:
                     System.out.println("Saindo...");
                     scanner.close();
                     break;
@@ -54,7 +57,8 @@ public class CaixaEletronico {
         System.out.println("4 - Sacar");
         System.out.println("5 - Exibir contas");
         System.out.println("6 - Render");
-        System.out.println("7 - Sair");
+        System.out.println("7 - Modificar taxa de rendimento");
+        System.out.println("8 - Sair");
     }
 
     private void criarConta() {
@@ -186,5 +190,13 @@ public class CaixaEletronico {
         }
 
         System.out.println("Rendimento aplicado com sucesso!");
+    }
+
+    private void modificarTaxaRendimento() {
+        System.out.println("Digite a nova taxa de rendimento: ");
+        double taxaRendimento = Double.parseDouble(scanner.nextLine());
+
+        ContaBancaria.setTaxaRendimento(taxaRendimento);
+        System.out.println("Taxa de rendimento modificada com sucesso!");
     }
 }

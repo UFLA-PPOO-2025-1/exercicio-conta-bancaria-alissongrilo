@@ -52,4 +52,8 @@ public class ContaBancaria {
     public void render() {
         saldo += saldo * taxaRendimento;
     }
+
+    public static void setTaxaRendimento(double taxaRendimento) {
+        ContaBancaria.taxaRendimento = taxaRendimento;
+    }
 }
